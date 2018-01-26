@@ -1,4 +1,4 @@
-# 购物系统
+# 购物系统 [![Build Status](https://www.travis-ci.org/xahhy/ThoughtWorks-Shopping-Spring-Backend.svg?branch=master)](https://www.travis-ci.org/xahhy/ThoughtWorks-Shopping-Spring-Backend)
 ## 系统环境
 - Windows10
 - Spring Boot v1.5.9.RELEASE
