@@ -1,5 +1,7 @@
 package com.shopping.shopping;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +36,20 @@ public class ShoppingApplicationTests {
         mvc.perform(MockMvcRequestBuilders.get("/greeting").accept(MediaType.APPLICATION_JSON).param("name", "hhy"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"content\":\"Hello, hhy\"}"));
+	}
+
+	@Test
+	public void getOneShoppingItem() throws Exception {
+        JSONArray items=  new JSONArray();
+        JSONObject item = new JSONObject();
+        item.put("barcode", "ITEM0");
+        item.put("name", "可乐");
+        item.put("price", 1.0);
+        item.put("unit", "瓶");
+        items.put(item);
+        mvc.perform(MockMvcRequestBuilders.get("/items").accept(MediaType.APPLICATION_JSON).param("name", "hhy"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(items.toString()));
 	}
 
 }
