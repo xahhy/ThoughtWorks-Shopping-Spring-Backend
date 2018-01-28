@@ -21,35 +21,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ShoppingApplicationTests {
+
     @Autowired
     private MockMvc mvc;
 
 	@Test
-	public void getHelloWorld() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/greeting").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{\"content\":\"Hello, world\"}"));
-	}
-
-	@Test
-	public void getHelloHhy() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/greeting").accept(MediaType.APPLICATION_JSON).param("name", "hhy"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{\"content\":\"Hello, hhy\"}"));
-	}
-
-	@Test
 	public void getOneShoppingItem() throws Exception {
-        JSONArray items=  new JSONArray();
         JSONObject item = new JSONObject();
-        item.put("barcode", "ITEM0");
-        item.put("name", "可乐");
-        item.put("price", 1.0);
+        item.put("barcode", "ITEM000000");
+        item.put("name", "可口可乐");
+        item.put("price", 3.0);
         item.put("unit", "瓶");
-        items.put(item);
-        mvc.perform(MockMvcRequestBuilders.get("/items").accept(MediaType.APPLICATION_JSON).param("name", "hhy"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/shoppingItems/1").accept(MediaType.APPLICATION_JSON).param("name", "hhy"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(items.toString()));
+                .andExpect(content().json(item.toString()));
 	}
 
 }
