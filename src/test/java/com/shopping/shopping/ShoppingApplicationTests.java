@@ -28,11 +28,10 @@ public class ShoppingApplicationTests {
 	@Test
 	public void getOneShoppingItem() throws Exception {
         JSONObject item = new JSONObject();
-        item.put("barcode", "ITEM0");
-        item.put("name", "可乐");
-        item.put("price", 1.0);
+        item.put("barcode", "ITEM000000");
+        item.put("name", "可口可乐");
+        item.put("price", 3.0);
         item.put("unit", "瓶");
-//        shoppingItemStore.addItem(JSON.parse);
         mvc.perform(MockMvcRequestBuilders.get("/api/shoppingItems/1").accept(MediaType.APPLICATION_JSON).param("name", "hhy"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(item.toString()));
