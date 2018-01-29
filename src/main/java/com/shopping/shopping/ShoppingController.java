@@ -1,14 +1,18 @@
 package com.shopping.shopping;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 //@RestController
+@Controller
 public class ShoppingController {
-//    @Autowired
+    //    @Autowired
 //    private ShoppingItemRepository repository;
 //
 //
@@ -16,4 +20,8 @@ public class ShoppingController {
 //    public List<ShoppingItem> getShoppingItems(){
 //        return (List<ShoppingItem>) this.repository.findAll();
 //    }
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity update(@RequestBody String item) {
+        return ResponseEntity.ok(item);
+    }
 }
