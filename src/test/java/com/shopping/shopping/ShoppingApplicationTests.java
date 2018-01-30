@@ -3,6 +3,7 @@ package com.shopping.shopping;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.net.URI;
 import java.util.logging.Logger;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -31,6 +33,21 @@ public class ShoppingApplicationTests {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private ShoppingItemRepository repository;
+
+    @Before
+    public void setUp(){
+        this.repository.deleteAll();
+        this.repository.save(new ShoppingItem("ITEM000000", "可口可乐", 3.00f, "瓶"));
+        this.repository.save(new ShoppingItem("ITEM000001", "雪碧", 3.00f, "瓶"));
+        this.repository.save(new ShoppingItem("ITEM000002", "苹果", 5.50f, "斤"));
+        this.repository.save(new ShoppingItem("ITEM000003", "荔枝", 15.00f, "斤"));
+        this.repository.save(new ShoppingItem("ITEM000004", "电池", 12.00f, "个"));
+        this.repository.save(new ShoppingItem("ITEM000005", "方便面", 4.50f, "袋"));
+
+    }
 
     @Test
     public void getOneShoppingItem() throws Exception {
@@ -46,17 +63,26 @@ public class ShoppingApplicationTests {
 
     @Test
     public void returnSameValueWithPostRequestBody() throws Exception {
-        JSONObject json = new JSONObject();
-        json.put("barcode", "ITEM000000");
+        JSONArray items = new JSONArray();
+        items.put("ITEM00000");
+        items.put("ITEM00001");
+        items.put("ITEM00002");
         String url = "/";
-        String shouldSame = json.toString();
+        String shouldSame = items.toString();
         MvcResult result = this.mvc.perform(
                 post(url)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(items.toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(shouldSame))
                 .andReturn();
+    }
+
+    @Test
+    public void calculateReturn3WhenItemIsItem000000(){
+        CalculateItem item = new CalculateItem(repository);
+        float result = item.calculate("ITEM000000");
+        assertEquals(result, 3f);
     }
 //    @Test
 //    public void generateOneShoppingItemFromClient() throws Exception {
