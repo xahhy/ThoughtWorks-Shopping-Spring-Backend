@@ -6,5 +6,5 @@ import java.util.List;
 
 
 public interface ShoppingItemRepository extends CrudRepository<ShoppingItem, Long> {
-    List<ShoppingItem> findByBarcode(@Param("barcode") String barcode);
+    ShoppingItem findByBarcode(@Param("barcode") String barcode);
 }

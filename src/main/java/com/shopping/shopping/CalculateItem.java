@@ -13,12 +13,32 @@ public class CalculateItem {
         this.repository = repository;
     }
 
-    public float calculate(String item) {
+    public float calculate(String itemString) {
         float value = 0;
-        ArrayList<ShoppingItem> items = (ArrayList<ShoppingItem>) repository.findByBarcode(item);
-        if(items.size() != 0){
-            value = items.get(0).price;
+        String barcode = getItemBarcode(itemString);
+        float count = getItemCount(itemString);
+        ShoppingItem item = repository.findByBarcode(barcode);
+        if(item != null){
+            value = item.price * count;
         }
         return value;
+    }
+
+    public static float getItemCount(String item){
+        try {
+            String count_string = item.split("-")[1];
+            return Float.parseFloat(count_string);
+        }catch (Exception e){
+            return 1f;
+        }
+    }
+
+    public static String getItemBarcode(String item){
+        try {
+            String barcode = item.split("-")[0];
+            return barcode;
+        }catch (Exception e){
+            return "Error getItemBarcode";
+        }
     }
 }
