@@ -1,7 +1,6 @@
 package com.shopping.shopping;
 
 import com.shopping.shopping.discount.BuyTwoOneFreeDiscount;
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
