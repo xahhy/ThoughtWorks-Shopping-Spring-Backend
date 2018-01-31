@@ -3,19 +3,23 @@ package com.shopping.shopping;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import lombok.Data;
 
 @Data
 @Entity
 public class ShoppingItem {
 
-    private @Id @GeneratedValue Long id;
-    private String barcode;
-    private String name;
-    private float price;
-    private String unit;
+    protected @Id
+    @GeneratedValue
+    Long id;
+    protected String barcode;
+    protected String name;
+    protected float price;
+    protected String unit;
 
-    private ShoppingItem(){}
+    protected ShoppingItem() {
+    }
 
     public ShoppingItem(String barcode, String name, float price, String unit) {
         this.barcode = barcode;
