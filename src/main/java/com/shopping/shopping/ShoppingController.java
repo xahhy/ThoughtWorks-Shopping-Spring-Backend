@@ -1,5 +1,6 @@
 package com.shopping.shopping;
 
+import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class ShoppingController {
     private ShoppingItemRepository repository;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity getClientItems(@RequestBody List<String> items) {
+    @ResponseBody
+    public ResponseEntity getClientItems(@RequestBody List<String> items) throws Exception {
         for (String item : items) {
             CalculateItem item_calculator = new CalculateItem(repository);
             float result = item_calculator.calculate(item);

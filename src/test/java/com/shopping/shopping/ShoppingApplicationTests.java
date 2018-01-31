@@ -1,5 +1,7 @@
 package com.shopping.shopping;
 
+import com.shopping.shopping.discount.BuyTwoOneFreeDiscount;
+import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -82,24 +84,41 @@ public class ShoppingApplicationTests {
     }
 
     @Test
-    public void calculateReturn3WhenItemIsItem000000(){
+    public void calculateReturn3WhenItemIsItem000000() throws Exception {
         CalculateItem item = new CalculateItem(repository);
         float result = item.calculate("ITEM000000");
         assertEquals(result, 3f);
     }
 
     @Test
-    public void testGetItemCountFromItemString(){
+    public void getItemCountFromItemString(){
         CalculateItem item = new CalculateItem(repository);
         float result = item.getItemCount("IEM00000-2.5");
         assertEquals(result, 2.5f);
     }
 
     @Test
-    public void shouldReturn6WhenItemStringIsItem000000_2(){
+    public void shouldReturn6WhenItemStringIsItem000000_2() throws Exception {
         CalculateItem item = new CalculateItem(repository);
         float result = item.calculate("ITEM000000-2");
         assertEquals(6.0f, result);
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenItemNotInDatabase(){
+        CalculateItem item = new CalculateItem(repository);
+        try {
+            item.calculate("ITEM");
+        }catch (Exception e){
+            assertEquals("Cannot find ITEM in database", e.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldDiscountOneItemWhenBuyThreeItem(){
+        ShoppingItem item = new ShoppingItem("ITEM000000", "可口可乐", 3.00f, "瓶");
+        BuyTwoOneFreeDiscount discount = new BuyTwoOneFreeDiscount(item, 3f);
+        assertEquals(3f, discount.discount());
     }
 //    @Test
 //    public void generateOneShoppingItemFromClient() throws Exception {
