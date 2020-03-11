@@ -27,4 +27,8 @@ public class ShoppingItem {
         this.price = price;
         this.unit = unit;
     }
+
+    public float getPrice() {
+        return price;
+    }
 }

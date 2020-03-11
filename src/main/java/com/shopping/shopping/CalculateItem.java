@@ -13,14 +13,13 @@ public class CalculateItem {
         this.repository = repository;
     }
 
-    public float calculate(String itemString) {
+    public float calculate(String itemString) throws Exception {
         float value = 0;
         String barcode = getItemBarcode(itemString);
         float count = getItemCount(itemString);
         ShoppingItem item = repository.findByBarcode(barcode);
-        if(item != null){
-            value = item.price * count;
-        }
+        if (item == null)throw new Exception(String.format("Cannot find %s in database", barcode));
+        value = item.price * count;
         return value;
     }
 
